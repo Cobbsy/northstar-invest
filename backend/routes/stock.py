@@ -119,12 +119,12 @@ def get_stock_audit(ticker: str):
 
 
 def _audit_alpha_vantage(ticker: str) -> StockAudit:
-    """Primary path: Alpha Vantage (reliable, no rate-limit issues)."""
+    """Primary path: Alpha Vantage, falls back to Yahoo Finance on failure."""
     try:
         quote = fetch_av_quote(ticker)
     except Exception as e:
-        print(f"[ERROR] Alpha Vantage quote failed for {ticker}: {e}")
-        raise HTTPException(status_code=502, detail=f"Could not fetch data for {ticker}: {e}")
+        print(f"[ERROR] Alpha Vantage quote failed for {ticker}: {e} — falling back to Yahoo Finance")
+        return _audit_yahoo(ticker)
 
     price = float(quote.get("05. price", 0))
     prev_close = float(quote.get("08. previous close", 0))
