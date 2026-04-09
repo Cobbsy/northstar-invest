@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import {
   Box, Card, CardContent, Typography, Slider, Stack,
-  ToggleButton, ToggleButtonGroup, Divider, Chip,
+  ToggleButton, ToggleButtonGroup, Divider,
 } from '@mui/material';
 import { TrendingDown, ContentCut, Shield } from '@mui/icons-material';
 import {
@@ -126,7 +126,7 @@ function CorrectionSimulator({
                 <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
                 <XAxis dataKey="month" tick={{ fontSize: 11 }} />
                 <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
-                <Tooltip formatter={(v: number) => `$${v.toLocaleString()}`} />
+                <Tooltip formatter={(v) => `$${Number(v).toLocaleString()}`} />
                 <ReferenceLine y={investment} stroke="#999" strokeDasharray="3 3" label="Start" />
                 <Area
                   type="monotone" dataKey="portfolio" name="Portfolio Value"
@@ -220,7 +220,7 @@ function DividendCutSimulator({
                 <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
                 <XAxis dataKey="month" tick={{ fontSize: 11 }} />
                 <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `$${v}`} />
-                <Tooltip formatter={(v: number) => `$${v.toLocaleString()}`} />
+                <Tooltip formatter={(v) => `$${Number(v).toLocaleString()}`} />
                 <Area
                   type="monotone" dataKey="normal" name="Normal Dividends"
                   stroke="#137333" fill="#E6F4EA" strokeWidth={2}

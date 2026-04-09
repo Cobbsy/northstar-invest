@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import {
   Box, Card, CardContent, Typography, Stack, Chip,
-  Slider, Divider, Avatar,
+  Slider, Divider,
 } from '@mui/material';
-import { Savings, CalendarMonth, TrendingUp } from '@mui/icons-material';
+import { CalendarMonth } from '@mui/icons-material';
 import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, Area, AreaChart, ReferenceLine,
+  XAxis, YAxis, CartesianGrid, Tooltip,
+  ResponsiveContainer, Area, AreaChart,
 } from 'recharts';
 import { surfaceColors } from '../theme/theme';
 
@@ -38,7 +38,7 @@ function buildSnowball(
   return data;
 }
 
-function getPaydayDates(year: number, month: number): number[] {
+function getPaydayDates(): number[] {
   // XDIV.TO pays monthly — typically around the 10th
   return [10];
 }
@@ -54,7 +54,7 @@ function PaydayCalendar({ monthlyIncome }: { monthlyIncome: number }) {
   const monthName = now.toLocaleString('default', { month: 'long' });
   const firstDay = new Date(year, month, 1).getDay(); // 0=Sun
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const paydayDates = getPaydayDates(year, month);
+  const paydayDates = getPaydayDates();
 
   // Build calendar grid (pad with nulls for offset)
   const cells: (number | null)[] = [
@@ -293,7 +293,7 @@ function SnowballChart({
                 <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
                 <XAxis dataKey="year" tick={{ fontSize: 11 }} />
                 <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
-                <Tooltip formatter={(v: number) => `$${v.toLocaleString()}`} />
+                <Tooltip formatter={(v) => `$${Number(v).toLocaleString()}`} />
                 <Area
                   type="monotone" dataKey="withReinvest" name="Reinvest Dividends"
                   stroke="#137333" fill="#E6F4EA" strokeWidth={2}
